@@ -3,45 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gordonia Up</title>
+<title>Gordonia Upsales</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"f6b23662d0174086b3f1ede3395b18f2"}'></script>
 
 <style>
 *{box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif}
 body{background:#EFECE6;margin:0;padding:15px;min-height:100vh;color:#1e293b}
-button,input,select{font:inherit}
+button,input,select,textarea{font:inherit}
 button{cursor:pointer;border:0;border-radius:9px;padding:11px 14px;font-weight:600}
-
 #loginCard{background:white;padding:25px;border-radius:20px;box-shadow:0 10px 30px #0000000f;width:100%;max-width:400px;margin:8vh auto}
 h2{text-align:center;margin-top:0;font-size:22px}
 .login-subtitle{text-align:center;color:#64748b;margin-bottom:25px}
 .form-group{margin-bottom:16px}
 label{display:block;font-size:14px;font-weight:600;color:#475569;margin-bottom:7px}
-input,select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;background:white;outline:none}
-input:focus,select:focus{border-color:#6641F5}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;background:white;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#6641F5}
 .primary{background:#6641F5;color:white}
 .primary:disabled{opacity:.6;cursor:wait}
 .login-btn{width:100%;padding:14px}
 .login-error,.error{color:#dc2626;text-align:center;font-size:13px;margin-top:12px}
-
 #appContainer{display:none;max-width:1100px;margin:auto}
 .topbar{background:white;padding:16px 20px;border-radius:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px;box-shadow:0 4px 15px #00000008;flex-wrap:wrap}
 .brand{font-weight:800;font-size:20px;color:#6641F5}
 .user-name{font-weight:700}
 .user-role{font-size:12px;color:#6641F5;margin-top:4px}
 .logout-btn{background:#fee2e2;color:#991b1b}
-
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
 .tab-btn{background:white;color:#475569;border:1px solid #e2e8f0}
 .tab-btn.active{background:#6641F5;color:white;border-color:#6641F5}
-
 .panel{display:none}
 .panel.active{display:block}
-
 .card{background:white;border-radius:16px;padding:20px;margin-bottom:15px;box-shadow:0 4px 15px #00000008}
 .card h3{font-size:17px;margin:0 0 18px}
-
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .stat{background:#f8fafc;border:1px solid #e2e8f0;padding:16px;border-radius:13px;min-width:0}
 .stat-label{font-size:12px;color:#64748b;margin-bottom:8px}
@@ -49,13 +43,10 @@ input:focus,select:focus{border-color:#6641F5}
 .stat-value.green{color:#059669}
 .stat-value.purple{color:#6641F5}
 .stat-value.red{color:#dc2626}
-
 .room-info{font-size:12px;color:#2563eb;margin-top:4px;font-weight:600}
-
 .discount-buttons{display:flex;gap:8px;margin-top:6px}
 .btn-discount{flex:1;padding:10px;border:1px solid #cbd5e1;background:#f8fafc;border-radius:8px;cursor:pointer;font-weight:bold;color:#334155;font-size:14px}
 .btn-discount:hover,.btn-discount.active{background:#2563eb;color:white;border-color:#2563eb}
-
 .result-box{margin-top:20px;padding:18px;border-radius:14px;text-align:center;transition:all .3s ease}
 .result-box.upsell{background:#f0f9ff;border:1px solid #bae6fd}
 .result-box.downgrade{background:#fef2f2;border:1px solid #fecaca}
@@ -66,100 +57,81 @@ input:focus,select:focus{border-color:#6641F5}
 .final-price{font-size:30px;font-weight:bold}
 .upsell .final-price{color:#0284c7}
 .downgrade .final-price{color:#dc2626}
-
 .save-btn{width:100%;margin-top:15px;padding:15px;background:#059669;color:white;font-size:16px}
 .save-btn:disabled{opacity:.5;cursor:not-allowed}
 .message{font-size:13px;text-align:center;margin-top:10px}
 .success{color:#059669}
-
 .filters{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:15px}
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:550px;font-size:13px}
 th,td{text-align:right;padding:12px;border-bottom:1px solid #e2e8f0;white-space:nowrap}
 th{background:#f8fafc;color:#475569}
 .empty{text-align:center;color:#94a3b8;padding:25px}
-
 .section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .small-btn{background:#f1f5f9;color:#334155}
 .delete-btn{background:#fee2e2;color:#b91c1c;padding:7px 10px;border:1px solid #fecaca;border-radius:7px;font-size:12px}
 .delete-btn:hover{background:#fecaca}
 .delete-btn:disabled{opacity:.5;cursor:wait}
+.progress-track{height:12px;background:#e2e8f0;border-radius:20px;overflow:hidden;margin:10px 0 7px}
+.progress-fill{height:100%;background:#16a34a;border-radius:20px;transition:width .3s}
+.progress-fill.purple{background:#6641F5}
+.progress-meta{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#64748b}
+.goal-stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.goal-stat{background:#f8fafc;border:1px solid #e2e8f0;border-radius:13px;padding:16px}
+.goal-stat-label{font-size:12px;color:#64748b}
+.goal-stat-value{font-size:24px;font-weight:800;margin-top:7px}
+.goal-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.goal-form .form-group{margin:0}
+.goal-save{width:100%;margin-top:14px}
+.goal-period{color:#64748b;font-size:13px;margin-top:-8px;margin-bottom:15px}
+.room-rank{font-weight:800;color:#6641F5}
+.weekly-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.weekly-winner{background:#faf7ff;border:1px solid #e6ddff}
+.weekly-winner .stat-value{color:#6641F5;font-size:20px}
+#calculatorPanel .calculator-card{background:#fff;padding:24px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,.06);width:100%;max-width:480px;margin:0 auto 15px}
+#calculatorPanel .calculator-card h2{margin-top:0;color:#1e293b;text-align:center;font-size:20px;margin-bottom:20px}
+#calculatorPanel .calculator-card .form-group{margin-bottom:16px}
+#calculatorPanel .calculator-card label{display:block;margin-bottom:6px;font-weight:600;color:#475569;font-size:14px}
+#calculatorPanel .calculator-card select,#calculatorPanel .calculator-card input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font-size:16px;outline:none;background-color:#fff}
+#calculatorPanel .calculator-card .room-info{font-size:12px;color:#2563eb;margin-top:4px;font-weight:600}
+#calculatorPanel .calculator-card .discount-buttons{display:flex;gap:8px;margin-top:6px}
+#calculatorPanel .calculator-card .btn-discount{flex:1;padding:10px;font-size:14px}
+#calculatorPanel .calculator-card .result-box{margin-top:20px;padding:18px}
+#calculatorPanel .calculator-card .final-price{font-size:30px}
 
-/* Calculator dimensions */
-#calculatorPanel .calculator-card{
-background:#ffffff;
-padding:24px;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.06);
-width:100%;
-max-width:480px;
-margin:0 auto 15px;
-}
-
-#calculatorPanel .calculator-card h2{
-margin-top:0;
-color:#1e293b;
-text-align:center;
-font-size:20px;
-margin-bottom:20px;
-}
-
-#calculatorPanel .calculator-card .form-group{
-margin-bottom:16px;
-}
-
-#calculatorPanel .calculator-card label{
-display:block;
-margin-bottom:6px;
-font-weight:600;
-color:#475569;
-font-size:14px;
-}
-
-#calculatorPanel .calculator-card select,
-#calculatorPanel .calculator-card input{
-width:100%;
-padding:12px;
-border:1px solid #cbd5e1;
-border-radius:10px;
-font-size:16px;
-outline:none;
-background-color:#fff;
-}
-
-#calculatorPanel .calculator-card .room-info{
-font-size:12px;
-color:#2563eb;
-margin-top:4px;
-font-weight:600;
-}
-
-#calculatorPanel .calculator-card .discount-buttons{
-display:flex;
-gap:8px;
-margin-top:6px;
-}
-
-#calculatorPanel .calculator-card .btn-discount{
-flex:1;
-padding:10px;
-font-size:14px;
-}
-
-#calculatorPanel .calculator-card .result-box{
-margin-top:20px;
-padding:18px;
-}
-
-#calculatorPanel .calculator-card .final-price{
-font-size:30px;
-}
+/* WhatsApp Offer Page */
+.offer-card{max-width:620px;margin:0 auto 15px;padding:25px}
+.offer-card h2{color:#1e293b;margin-bottom:8px}
+.offer-subtitle{text-align:center;color:#64748b;font-size:13px;margin-bottom:25px}
+.offer-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.offer-form-grid .form-group{margin-bottom:15px}
+.offer-form-grid .full-width{grid-column:1/-1}
+.offer-card input{font-size:15px}
+.offer-card textarea{min-height:170px;resize:vertical;line-height:1.8;font-size:14px}
+.offer-preview{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:14px;padding:17px;margin-top:18px}
+.offer-preview-title{font-size:14px;font-weight:800;color:#166534;margin-bottom:12px}
+.offer-preview-text{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.9;font-size:14px;color:#334155}
+.whatsapp-btn{width:100%;background:#16a34a;color:white;padding:15px;font-size:16px;margin-top:18px}
+.whatsapp-btn:hover{background:#15803d}
+.whatsapp-btn:disabled{opacity:.5;cursor:not-allowed}
+.offer-reset-btn{width:100%;background:#f1f5f9;color:#475569;margin-top:10px;padding:12px}
+.offer-note{font-size:12px;color:#64748b;text-align:center;line-height:1.7;margin-top:13px}
+.offer-status{font-size:13px;text-align:center;margin-top:12px;min-height:18px}
+.offer-status.error{color:#dc2626}
+.offer-status.success{color:#059669}
 
 @media(max-width:700px){
 .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 .filters{grid-template-columns:1fr 1fr}
+.weekly-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-
+@media(max-width:480px){
+.goal-form{grid-template-columns:1fr}
+.weekly-summary-grid{grid-template-columns:1fr}
+.offer-form-grid{grid-template-columns:1fr}
+.offer-form-grid .full-width{grid-column:auto}
+.offer-card{padding:18px}
+}
 @media(max-width:380px){
 .grid{gap:7px}
 .stat{padding:12px}
@@ -173,30 +145,26 @@ font-size:30px;
 <body>
 
 <div id="loginCard">
-<h2>Gordonia Up</h2>
+<h2>Gordonia Upsales</h2>
 <p class="login-subtitle">התחברות למערכת</p>
-
 <form id="loginForm">
 <div class="form-group">
 <label for="loginUsername">שם משתמש:</label>
 <input id="loginUsername" type="text" autocomplete="username" required placeholder="הזן שם משתמש">
 </div>
-
 <div class="form-group">
 <label for="loginPassword">סיסמה:</label>
 <input id="loginPassword" type="password" autocomplete="current-password" required placeholder="הזן סיסמה">
 </div>
-
 <button class="primary login-btn" id="loginButton">התחברות</button>
 <div id="loginError" class="login-error"></div>
 </form>
 </div>
 
 <div id="appContainer">
-
 <div class="topbar">
 <div>
-<div class="brand">Gordonia Up</div>
+<div class="brand">Gordonia Upsales</div>
 <div class="user-name" id="employeeName"></div>
 <div class="user-role" id="employeeRole"></div>
 </div>
@@ -206,14 +174,13 @@ font-size:30px;
 <div class="tabs">
 <button class="tab-btn active" data-tab="calculatorPanel">מחשבון</button>
 <button class="tab-btn" data-tab="dashboardPanel">לוח בקרה</button>
+<button class="tab-btn" data-tab="weeklyGoalsPanel">יעד שבועי</button>
+<button class="tab-btn" data-tab="sendOfferPanel">שליחת הצעה</button>
 </div>
 
 <div class="panel active" id="calculatorPanel">
-
 <div class="card calculator-card">
-
 <h2>מחשבון שדרוג ושנמוך לפי מספר חדר</h2>
-
 <div class="form-group">
 <label for="currentRoomNum">מספר חדר נוכחי:</label>
 <select id="currentRoomNum">
@@ -221,7 +188,6 @@ font-size:30px;
 </select>
 <div id="currentRoomType" class="room-info"></div>
 </div>
-
 <div class="form-group">
 <label for="targetRoomNum">מספר חדר מבוקש:</label>
 <select id="targetRoomNum">
@@ -229,102 +195,157 @@ font-size:30px;
 </select>
 <div id="targetRoomType" class="room-info"></div>
 </div>
-
 <div class="form-group">
 <label for="nightsCount">מספר לילות:</label>
 <input type="number" id="nightsCount" min="1" value="1">
 </div>
-
 <div id="discountSection" class="form-group">
 <label>אחוזי הנחה מהירים (בשדרוג):</label>
-
 <div class="discount-buttons">
 <button type="button" class="btn-discount active" data-discount="0">0%</button>
 <button type="button" class="btn-discount" data-discount="10">10%</button>
 <button type="button" class="btn-discount" data-discount="20">20%</button>
 <button type="button" class="btn-discount" data-discount="50">50%</button>
 </div>
-
 <label for="customDiscount" style="margin-top:10px">או הזן אחוז הנחה מותאם אישית (%):</label>
 <input type="number" id="customDiscount" min="0" max="100" value="0">
 </div>
-
 <div id="resultBox" class="result-box upsell">
 <div id="priceLabel" class="price-label">מחיר שדרוג סופי לחיוב:</div>
 <div id="originalPrice" class="original-price" style="display:none"></div>
 <div id="finalPrice" class="final-price">₪ 0</div>
 </div>
-
-<div class="form-group" style="margin-top:18px">
-<label for="transactionNotes">הערות (לא חובה):</label>
-<input type="text" id="transactionNotes" placeholder="הערות לגבי העסקה">
-</div>
-
 <button class="save-btn" id="saveTransactionButton" disabled>שמירת עסקה</button>
 <div id="saveMessage" class="message"></div>
+</div>
+</div>
 
+<!-- WhatsApp Offer Page -->
+<div class="panel" id="sendOfferPanel">
+<div class="card offer-card">
+<h2>שליחת הצעת שדרוג לאורח</h2>
+<p class="offer-subtitle">הכנס את פרטי האורח והצעת השדרוג ושלח הודעה ב-WhatsApp</p>
+
+<div class="offer-form-grid">
+<div class="form-group full-width">
+<label for="offerGuestName">שם האורח:</label>
+<input type="text" id="offerGuestName" placeholder="לדוגמה: ישראל ישראלי" autocomplete="off">
+</div>
+
+<div class="form-group full-width">
+<label for="offerPhone">מספר טלפון:</label>
+<input type="tel" id="offerPhone" placeholder="0501234567" autocomplete="tel" dir="ltr">
+</div>
+
+<div class="form-group">
+<label for="offerNights">מספר לילות:</label>
+<input type="number" id="offerNights" min="1" step="1" placeholder="לדוגמה: 2">
+</div>
+
+<div class="form-group">
+<label for="offerRoomType">סוג החדר המוצע:</label>
+<input type="text" id="offerRoomType" placeholder="לדוגמה: Junior Suite">
+</div>
+
+<div class="form-group full-width">
+<label for="offerRoomLink">קישור להצעת החדר:</label>
+<input type="url" id="offerRoomLink" placeholder="https://example.com/offer" dir="ltr">
+</div>
+</div>
+
+<div class="offer-preview">
+<div class="offer-preview-title">תצוגה מקדימה של ההודעה:</div>
+<div class="offer-preview-text" id="offerMessagePreview">שלום 😊
+
+נשמח להציע לך שדרוג לחדר מסוג ...
+
+לצפייה בהצעה:
+...</div>
+</div>
+
+<button class="whatsapp-btn" id="sendWhatsAppButton" disabled>
+שליחת הצעה ב-WhatsApp
+</button>
+
+<button class="offer-reset-btn" id="resetOfferButton" type="button">
+ניקוי פרטים
+</button>
+
+<div class="offer-status" id="offerStatus"></div>
+
+<p class="offer-note">
+בלחיצה על הכפתור ייפתח WhatsApp עם הודעה מוכנה לשליחה.
+יש ללחוץ על כפתור השליחה בתוך WhatsApp כדי לשלוח את ההודעה לאורח.
+</p>
 </div>
 </div>
 
 <div class="panel" id="dashboardPanel">
-
 <div class="card">
-
 <div class="section-title">
 <h3 id="dashboardTitle">לוח בקרה</h3>
 <button class="small-btn" id="refreshDashboard">רענון נתונים</button>
 </div>
-
 <div class="filters">
-
 <div>
 <label for="dateFrom">מתאריך:</label>
 <input type="date" id="dateFrom">
 </div>
-
 <div>
 <label for="dateTo">עד תאריך:</label>
 <input type="date" id="dateTo">
 </div>
-
 </div>
-
 <div id="adminEmployeeFilter" style="display:none;margin-bottom:15px">
 <label for="employeeFilter">עובד:</label>
 <select id="employeeFilter">
 <option value="">כל העובדים</option>
 </select>
 </div>
-
 <div class="grid">
-
 <div class="stat">
 <div class="stat-label">סך הכנסות משדרוגים</div>
 <div class="stat-value green" id="totalRevenue">₪ 0</div>
 </div>
-
 <div class="stat">
 <div class="stat-label">מספר שדרוגים</div>
 <div class="stat-value purple" id="upgradeCount">0</div>
 </div>
-
 <div class="stat">
 <div class="stat-label">ממוצע הכנסה לשדרוג</div>
 <div class="stat-value" id="averageUpgrade">₪ 0</div>
 </div>
-
 <div class="stat">
 <div class="stat-label">מספר שנמוכים</div>
 <div class="stat-value red" id="downsellCount">0</div>
 </div>
+</div>
+</div>
 
+<div class="card">
+<div class="section-title">
+<h3>החדרים הנמכרים ביותר</h3>
+<span id="popularRoomsPeriod" style="font-size:12px;color:#64748b"></span>
+</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>דירוג</th>
+<th>סוג חדר</th>
+<th>מספר שדרוגים</th>
+<th>הכנסות</th>
+</tr>
+</thead>
+<tbody id="popularRoomsTable">
+<tr><td colspan="4" class="empty">טוען נתונים...</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 
 <div class="card" id="employeePerformanceCard" style="display:none">
-
 <h3>ביצועי עובדים</h3>
-
 <div class="table-wrap">
 <table>
 <thead>
@@ -338,13 +359,10 @@ font-size:30px;
 <tbody id="employeePerformance"></tbody>
 </table>
 </div>
-
 </div>
 
 <div class="card">
-
 <h3 id="transactionsTitle">היסטוריית עסקאות</h3>
-
 <div class="table-wrap">
 <table>
 <thead>
@@ -363,7 +381,91 @@ font-size:30px;
 <tbody id="transactionsTable"></tbody>
 </table>
 </div>
+</div>
+</div>
 
+<div class="panel" id="weeklyGoalsPanel">
+<div class="card">
+<div class="section-title">
+<h3>היעד השבועי של הצוות</h3>
+<button class="small-btn" id="refreshWeeklyGoals">רענון</button>
+</div>
+<div class="goal-period" id="weeklyPeriod"></div>
+<div id="weeklyGoalAdminForm" style="display:none">
+<h3>הגדרת יעד שבועי</h3>
+<div class="goal-form">
+<div class="form-group">
+<label for="goalUpgrades">יעד מספר שדרוגים:</label>
+<input type="number" id="goalUpgrades" min="0" step="1" placeholder="לדוגמה: 15">
+</div>
+<div class="form-group">
+<label for="goalRevenue">יעד הכנסות (₪):</label>
+<input type="number" id="goalRevenue" min="0" step="0.01" placeholder="לדוגמה: 13000">
+</div>
+</div>
+<button class="primary goal-save" id="saveWeeklyGoal">שמירת יעד שבועי</button>
+<div id="goalSaveMessage" class="message"></div>
+</div>
+</div>
+
+<div class="card">
+<h3>התקדמות הצוות השבועית</h3>
+<div class="goal-stat-grid">
+<div class="goal-stat">
+<div class="goal-stat-label">יעד שדרוגים</div>
+<div class="goal-stat-value" id="weeklyTargetCount">0</div>
+</div>
+<div class="goal-stat">
+<div class="goal-stat-label">יעד הכנסות</div>
+<div class="goal-stat-value" id="weeklyTargetRevenue">₪ 0</div>
+</div>
+</div>
+<div style="margin-top:22px">
+<div class="progress-meta">
+<span>התקדמות שדרוגים</span>
+<strong id="weeklyUpgradeText">0 / 0</strong>
+</div>
+<div class="progress-track">
+<div class="progress-fill" id="weeklyUpgradeBar" style="width:0%"></div>
+</div>
+<div class="progress-meta">
+<span id="weeklyUpgradePercent">0%</span>
+<span id="weeklyUpgradeRemaining">נותרו 0 שדרוגים</span>
+</div>
+</div>
+<div style="margin-top:22px">
+<div class="progress-meta">
+<span>התקדמות הכנסות</span>
+<strong id="weeklyRevenueText">₪ 0 / ₪ 0</strong>
+</div>
+<div class="progress-track">
+<div class="progress-fill purple" id="weeklyRevenueBar" style="width:0%"></div>
+</div>
+<div class="progress-meta">
+<span id="weeklyRevenuePercent">0%</span>
+<span id="weeklyRevenueRemaining">נותרו ₪ 0</span>
+</div>
+</div>
+<div id="weeklyGoalMessage" class="message"></div>
+</div>
+
+<div class="card">
+<h3>סיכום השבוע</h3>
+<div class="weekly-summary-grid">
+<div class="stat">
+<div class="stat-label">שדרוגים שבוצעו</div>
+<div class="stat-value purple" id="weeklyActualUpgrades">0</div>
+</div>
+<div class="stat">
+<div class="stat-label">הכנסות בפועל</div>
+<div class="stat-value green" id="weeklyActualRevenue">₪ 0</div>
+</div>
+<div class="stat weekly-winner">
+<div class="stat-label">העובד עם ההכנסות הגבוהות ביותר</div>
+<div class="stat-value" id="weeklyTopEmployee">טוען...</div>
+<div class="room-info" id="weeklyTopEmployeeRevenue"></div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -425,6 +527,23 @@ function localDate(date){
 return new Date(date).toLocaleDateString("he-IL");
 }
 
+function dateString(date){
+const y=date.getFullYear();
+const m=String(date.getMonth()+1).padStart(2,"0");
+const d=String(date.getDate()).padStart(2,"0");
+return `${y}-${m}-${d}`;
+}
+
+function getCurrentWeek(){
+const now=new Date();
+const start=new Date(now);
+start.setHours(0,0,0,0);
+start.setDate(start.getDate()-start.getDay());
+const end=new Date(start);
+end.setDate(start.getDate()+6);
+return {start:dateString(start),end:dateString(end)};
+}
+
 function initializeRoomOptions(){
 for(let i=1;i<=40;i++){
 $("currentRoomNum").add(new Option("חדר "+i,i));
@@ -443,7 +562,6 @@ $("loginCard").style.display="block";
 }
 
 async function loadEmployee(user){
-
 const {data:employee,error}=await supabaseClient
 .from("employees")
 .select("id,full_name,role,is_active,auth_user_id")
@@ -451,12 +569,22 @@ const {data:employee,error}=await supabaseClient
 .eq("is_active",true)
 .maybeSingle();
 
-if(error||!employee){
-await supabaseClient.auth.signOut();
+if(error){
+console.error("EMPLOYEE LOOKUP ERROR:",error);
 currentEmployee=null;
 currentAuthUser=null;
 showLogin();
-$("loginError").innerText="אין הרשאה למערכת. פנה למנהל.";
+$("loginError").innerText="שגיאה בטעינת הרשאות העובד: "+error.message;
+await supabaseClient.auth.signOut();
+return false;
+}
+
+if(!employee){
+currentEmployee=null;
+currentAuthUser=null;
+showLogin();
+$("loginError").innerText="התחברת בהצלחה, אך לא נמצא עובד פעיל המקושר לחשבון. פנה למנהל.";
+await supabaseClient.auth.signOut();
 return false;
 }
 
@@ -468,6 +596,7 @@ $("employeeRole").innerText=employee.role==="admin"?"מנהל מערכת":"עו�
 $("employeePerformanceCard").style.display=employee.role==="admin"?"block":"none";
 $("adminEmployeeFilter").style.display=employee.role==="admin"?"block":"none";
 $("dashboardTitle").innerText=employee.role==="admin"?"לוח בקרה למנהל":"לוח הבקרה שלי";
+$("weeklyGoalAdminForm").style.display=employee.role==="admin"?"block":"none";
 
 showApp();
 await loadEmployees();
@@ -475,12 +604,10 @@ return true;
 }
 
 async function login(event){
-
 event.preventDefault();
 
 const username=$("loginUsername").value.trim().toLowerCase();
 const password=$("loginPassword").value;
-
 $("loginError").innerText="";
 
 if(!/^[a-z0-9._-]{3,30}$/.test(username)){
@@ -492,24 +619,36 @@ $("loginButton").disabled=true;
 $("loginButton").innerText="מתחבר...";
 
 try{
-
 const internalEmail=username+"@gordonia-up.invalid";
 
 const {data,error}=await supabaseClient.auth.signInWithPassword({
 email:internalEmail,
-password
+password:password
 });
 
-if(error)throw error;
+if(error){
+console.error("AUTH LOGIN ERROR:",error);
+if(error.message==="Invalid login credentials"){
+$("loginError").innerText="שם המשתמש או הסיסמה שגויים";
+}else{
+$("loginError").innerText="שגיאה בהתחברות: "+error.message;
+}
+return;
+}
 
 const loaded=await loadEmployee(data.user);
 
 if(!loaded){
-throw new Error("אין הרשאה למערכת");
+return;
 }
 
+$("loginError").innerText="";
+
 }catch(error){
-$("loginError").innerText="שם המשתמש או הסיסמה שגויים";
+console.error("LOGIN ERROR:",error);
+if(!$("loginError").innerText){
+$("loginError").innerText="שגיאה בהתחברות: "+(error.message||"שגיאה לא ידועה");
+}
 }finally{
 $("loginButton").disabled=false;
 $("loginButton").innerText="התחברות";
@@ -517,83 +656,63 @@ $("loginButton").innerText="התחברות";
 }
 
 async function logout(){
-
 const {error}=await supabaseClient.auth.signOut();
-
 if(error){
 alert("אירעה שגיאה בעת ההתנתקות");
 return;
 }
-
 currentEmployee=null;
 currentAuthUser=null;
 transactionsCache=[];
 employeesCache=[];
-
 showLogin();
 $("loginPassword").value="";
 $("loginError").innerText="";
 }
 
 function setDiscount(value,button){
-
 currentDiscount=value;
 $("customDiscount").value=value;
-
 document.querySelectorAll(".btn-discount").forEach(b=>b.classList.remove("active"));
-
 if(button)button.classList.add("active");
-
 calculatePrice();
 }
 
 function onCustomDiscountChange(value){
-
 currentDiscount=Math.max(0,Math.min(100,parseFloat(value)||0));
-
 document.querySelectorAll(".btn-discount").forEach(b=>b.classList.remove("active"));
-
 calculatePrice();
 }
 
 function updateUI(basePrice,finalPrice,isDiscountApplicable){
-
 $("originalPrice").style.display=
 isDiscountApplicable&&currentDiscount>0&&basePrice>0?"block":"none";
-
 $("originalPrice").innerText=money(basePrice);
 $("finalPrice").innerText=money(finalPrice);
 }
 
 function calculatePrice(){
-
 const fromNum=$("currentRoomNum").value;
 const toNum=$("targetRoomNum").value;
 const nights=Math.max(1,parseInt($("nightsCount").value)||1);
-
 const from=roomMapping[fromNum];
 const to=roomMapping[toNum];
 
 $("currentRoomType").innerText=from?"סוג חדר: "+from:"";
 $("targetRoomType").innerText=to?"סוג חדר: "+to:"";
-
 $("saveMessage").innerText="";
 $("saveTransactionButton").disabled=true;
-
 currentCalculation=null;
 
 if(!from||!to||from===to){
-
 $("resultBox").className="result-box upsell";
 $("priceLabel").innerText="מחיר שדרוג סופי לחיוב:";
 $("discountSection").style.display="block";
-
 updateUI(0,0,false);
 return;
 }
 
 if(upsellMatrix[to]&&upsellMatrix[to][from]!==undefined){
-
 const base=upsellMatrix[to][from]*nights;
 let final;
 
@@ -606,7 +725,6 @@ final=base-(base*currentDiscount/100);
 $("resultBox").className="result-box upsell";
 $("priceLabel").innerText="מחיר שדרוג סופי לחיוב:";
 $("discountSection").style.display="block";
-
 updateUI(base,final,true);
 
 currentCalculation={
@@ -619,17 +737,13 @@ nights,
 discount:currentDiscount,
 amount:final
 };
-
 $("saveTransactionButton").disabled=false;
 
 }else if(upsellMatrix[from]&&upsellMatrix[from][to]!==undefined){
-
 const refund=upsellMatrix[from][to]*nights;
-
 $("resultBox").className="result-box downgrade";
 $("priceLabel").innerText="סכום להחזר לאורח (זיכוי):";
 $("discountSection").style.display="none";
-
 updateUI(refund,refund,false);
 
 currentCalculation={
@@ -642,28 +756,28 @@ nights,
 discount:0,
 amount:-refund
 };
-
 $("saveTransactionButton").disabled=false;
 
 }else{
-
 $("finalPrice").innerText="לא זמין";
 $("originalPrice").style.display="none";
 }
 }
 
 async function saveTransaction(){
-
-if(!currentEmployee||!currentCalculation)return;
+if(!currentEmployee||!currentAuthUser||!currentCalculation){
+$("saveMessage").innerText="חסרים נתונים לשמירת העסקה";
+$("saveMessage").className="message error";
+return;
+}
 
 const c=currentCalculation;
 const button=$("saveTransactionButton");
-
 button.disabled=true;
 button.innerText="שומר...";
+$("saveMessage").innerText="";
 
 try{
-
 const transaction={
 employee_id:currentEmployee.id,
 transaction_type:c.type,
@@ -671,59 +785,67 @@ original_room:String(c.fromNum),
 new_room:String(c.toNum),
 original_room_type:c.fromType,
 new_room_type:c.toType,
-nights:c.nights,
-discount_percent:c.discount,
-incremental_amount:c.amount,
+nights:Number(c.nights),
+discount_percent:Number(c.discount),
+incremental_amount:Number(c.amount),
 transaction_date:new Date().toISOString(),
-notes:$("transactionNotes").value.trim()||null,
 created_by:currentAuthUser.id
 };
 
 const {error}=await supabaseClient
 .from("transactions")
-.insert(transaction);
+.insert([transaction]);
 
 if(error)throw error;
 
 $("saveMessage").innerText="העסקה נשמרה בהצלחה!";
 $("saveMessage").className="message success";
 
-$("transactionNotes").value="";
+currentCalculation=null;
+$("saveTransactionButton").disabled=true;
 
 await loadDashboard();
+await loadWeeklyGoals();
 
 }catch(error){
+console.error("Transaction save error:",error);
 
-console.error(error);
+let errorMessage=error.message||"שגיאה לא ידועה";
 
-$("saveMessage").innerText="שגיאה בשמירת העסקה: "+error.message;
+if(error.code==="42501"){
+errorMessage="אין הרשאה לשמור עסקה. בדוק את מדיניות RLS.";
+}else if(error.code==="23503"){
+errorMessage="העובד או המשתמש אינם קיימים בטבלת העובדים.";
+}else if(error.code==="23502"){
+errorMessage="חסר שדה חובה בטבלת העסקאות: "+(error.details||error.message);
+}else if(error.code==="42703"){
+errorMessage="שם עמודה אינו קיים בטבלת העסקאות: "+error.message;
+}else if(error.code==="23505"){
+errorMessage="העסקה כבר קיימת במערכת.";
+}
+
+$("saveMessage").innerText="שגיאה בשמירת העסקה: "+errorMessage;
 $("saveMessage").className="message error";
 
 }finally{
-
 button.innerText="שמירת עסקה";
 button.disabled=!currentCalculation;
 }
 }
 
 async function deleteTransaction(transactionId,button){
-
 if(!currentEmployee||currentEmployee.role!=="admin"){
 alert("אין לך הרשאה למחוק עסקאות");
 return;
 }
 
-const confirmed=confirm(
-"האם אתה בטוח שברצונך למחוק את העסקה?\nלא ניתן לשחזר את הפעולה."
-);
-
+const confirmed=confirm("האם אתה בטוח שברצונך למחוק את העסקה?\nלא ניתן לשחזר את הפעולה.");
 if(!confirmed)return;
 
 button.disabled=true;
 button.innerText="מוחק...";
 
 try{
-
 const {data,error}=await supabaseClient
 .from("transactions")
 .delete()
@@ -731,28 +853,22 @@ const {data,error}=await supabaseClient
 .select("id");
 
 if(error)throw error;
-
 if(!data||data.length===0){
 throw new Error("לא ניתן למחוק את העסקה. בדוק את הרשאות המחיקה.");
 }
 
 alert("העסקה נמחקה בהצלחה");
-
 await loadDashboard();
-
+await loadWeeklyGoals();
 }catch(error){
-
 console.error(error);
-
 alert("שגיאה במחיקת העסקה: "+error.message);
-
 button.disabled=false;
 button.innerText="מחיקת עסקה";
 }
 }
 
 async function loadEmployees(){
-
 if(!currentEmployee||currentEmployee.role!=="admin")return;
 
 const {data,error}=await supabaseClient
@@ -766,7 +882,6 @@ return;
 }
 
 employeesCache=data||[];
-
 const select=$("employeeFilter");
 select.innerHTML='<option value="">כל העובדים</option>';
 
@@ -776,9 +891,7 @@ select.add(new Option(employee.full_name,employee.id));
 }
 
 function getFilteredTransactions(){
-
 let rows=[...transactionsCache];
-
 const from=$("dateFrom").value;
 const to=$("dateTo").value;
 const employeeId=$("employeeFilter").value;
@@ -786,26 +899,22 @@ const employeeId=$("employeeFilter").value;
 if(from){
 rows=rows.filter(t=>new Date(t.transaction_date)>=new Date(from+"T00:00:00"));
 }
-
 if(to){
 const end=new Date(to+"T23:59:59.999");
 rows=rows.filter(t=>new Date(t.transaction_date)<=end);
 }
-
 if(currentEmployee.role==="admin"&&employeeId){
 rows=rows.filter(t=>t.employee_id===employeeId);
 }
-
 return rows;
 }
 
 async function loadDashboard(){
-
 if(!currentEmployee)return;
 
 let query=supabaseClient
 .from("transactions")
-.select("id,employee_id,transaction_type,original_room,new_room,original_room_type,new_room_type,nights,discount_percent,incremental_amount,transaction_date,notes,created_by")
+.select("id,employee_id,transaction_type,original_room,new_room,original_room_type,new_room_type,nights,discount_percent,incremental_amount,transaction_date,created_by")
 .order("transaction_date",{ascending:false});
 
 if(currentEmployee.role!=="admin"){
@@ -813,7 +922,6 @@ query=query.eq("employee_id",currentEmployee.id);
 }
 
 const {data,error}=await query;
-
 if(error){
 console.error(error);
 alert("שגיאה בטעינת הנתונים: "+error.message);
@@ -821,17 +929,14 @@ return;
 }
 
 transactionsCache=data||[];
-
 renderDashboard();
+await loadPopularRooms();
 }
 
 function renderDashboard(){
-
 const rows=getFilteredTransactions();
-
 const upgrades=rows.filter(t=>t.transaction_type==="upsell");
 const downsells=rows.filter(t=>t.transaction_type==="downsell");
-
 const revenue=upgrades.reduce((sum,t)=>sum+Number(t.incremental_amount||0),0);
 const average=upgrades.length?revenue/upgrades.length:0;
 
@@ -841,39 +946,69 @@ $("averageUpgrade").innerText=money(average);
 $("downsellCount").innerText=downsells.length;
 
 renderTransactions(rows);
-
-if(currentEmployee.role==="admin"){
-renderEmployeePerformance(rows);
+if(currentEmployee.role==="admin")renderEmployeePerformance(rows);
 }
+
+async function loadPopularRooms(){
+const from=$("dateFrom").value||"2000-01-01";
+const to=$("dateTo").value||dateString(new Date());
+
+$("popularRoomsPeriod").innerText=from==="2000-01-01"?"כל התקופה":from+" – "+to;
+$("popularRoomsTable").innerHTML='<tr><td colspan="4" class="empty">טוען נתונים...</td></tr>';
+
+const {data,error}=await supabaseClient.rpc("get_popular_upgrade_rooms",{
+p_start_date:from,
+p_end_date:to
+});
+
+if(error){
+console.error(error);
+$("popularRoomsTable").innerHTML='<tr><td colspan="4" class="empty">לא ניתן לטעון נתוני חדרים</td></tr>';
+return;
+}
+
+const body=$("popularRoomsTable");
+body.innerHTML="";
+
+if(!data||!data.length){
+body.innerHTML='<tr><td colspan="4" class="empty">אין נתוני שדרוגים להצגה</td></tr>';
+return;
+}
+
+data.forEach((room,index)=>{
+const tr=document.createElement("tr");
+[
+index+1,
+room.room_type||"-",
+Number(room.upgrade_count||0),
+money(room.total_revenue)
+].forEach((value,i)=>{
+const td=document.createElement("td");
+td.textContent=value;
+if(i===0)td.className="room-rank";
+tr.appendChild(td);
+});
+body.appendChild(tr);
+});
 }
 
 function renderTransactions(rows){
-
 const body=$("transactionsTable");
 const isAdmin=currentEmployee.role==="admin";
-
 $("deleteHeader").style.display=isAdmin?"table-cell":"none";
-
 body.innerHTML="";
 
 if(!rows.length){
-
 body.innerHTML=`<tr><td colspan="${isAdmin?9:8}" class="empty">אין עסקאות להצגה</td></tr>`;
-
 return;
 }
 
 rows.forEach(t=>{
-
 const employee=employeesCache.find(e=>e.id===t.employee_id);
-
 const name=employee?employee.full_name:
 (t.employee_id===currentEmployee.id?currentEmployee.full_name:"-");
-
 const type=t.transaction_type==="upsell"?"שדרוג":"שנמוך";
-
 const amount=Number(t.incremental_amount||0);
-
 const tr=document.createElement("tr");
 
 [
@@ -886,100 +1021,407 @@ t.nights,
 (t.discount_percent||0)+"%",
 money(amount)
 ].forEach(value=>{
-
 const td=document.createElement("td");
 td.textContent=value;
 tr.appendChild(td);
-
 });
 
 if(isAdmin){
-
 const td=document.createElement("td");
 const deleteButton=document.createElement("button");
-
 deleteButton.className="delete-btn";
 deleteButton.innerText="מחיקת עסקה";
-
 deleteButton.addEventListener("click",()=>{
 deleteTransaction(t.id,deleteButton);
 });
-
 td.appendChild(deleteButton);
 tr.appendChild(td);
 }
-
 body.appendChild(tr);
 });
 }
 
 function renderEmployeePerformance(rows){
-
 const body=$("employeePerformance");
 body.innerHTML="";
-
 const groups={};
 
 rows.filter(t=>t.transaction_type==="upsell").forEach(t=>{
-
 if(!groups[t.employee_id]){
 groups[t.employee_id]={count:0,revenue:0};
 }
-
 groups[t.employee_id].count++;
 groups[t.employee_id].revenue+=Number(t.incremental_amount||0);
-
 });
 
 const entries=Object.entries(groups).sort((a,b)=>b[1].revenue-a[1].revenue);
-
 if(!entries.length){
-
 body.innerHTML='<tr><td colspan="4" class="empty">אין נתונים להצגה</td></tr>';
-
 return;
 }
 
 entries.forEach(([id,stats])=>{
-
 const employee=employeesCache.find(e=>e.id===id);
 const tr=document.createElement("tr");
-
 [
 employee?employee.full_name:"עובד",
 stats.count,
 money(stats.revenue),
 money(stats.revenue/stats.count)
 ].forEach(value=>{
-
 const td=document.createElement("td");
 td.textContent=value;
 tr.appendChild(td);
-
 });
-
 body.appendChild(tr);
 });
 }
 
-function activateTab(tabId){
+async function loadWeeklyTopEmployee(week){
+const nameElement=$("weeklyTopEmployee");
+const revenueElement=$("weeklyTopEmployeeRevenue");
 
+nameElement.innerText="טוען...";
+revenueElement.innerText="";
+
+try{
+const nextDay=new Date(week.end+"T00:00:00");
+nextDay.setDate(nextDay.getDate()+1);
+
+const {data:transactions,error:transactionError}=await supabaseClient
+.from("transactions")
+.select("employee_id,incremental_amount,transaction_type")
+.eq("transaction_type","upsell")
+.gte("transaction_date",week.start+"T00:00:00")
+.lt("transaction_date",dateString(nextDay));
+
+if(transactionError)throw transactionError;
+
+if(!transactions||transactions.length===0){
+nameElement.innerText="אין עדיין עסקאות";
+return;
+}
+
+const totals={};
+
+transactions.forEach(transaction=>{
+const id=transaction.employee_id;
+if(!totals[id]){
+totals[id]=0;
+}
+totals[id]+=Number(transaction.incremental_amount||0);
+});
+
+const topEntry=Object.entries(totals)
+.sort((a,b)=>b[1]-a[1])[0];
+
+if(!topEntry){
+nameElement.innerText="אין נתונים";
+return;
+}
+
+const [topEmployeeId,total]=topEntry;
+
+let employee=employeesCache.find(e=>e.id===topEmployeeId);
+
+if(!employee){
+const {data,error}=await supabaseClient
+.from("employees")
+.select("id,full_name")
+.eq("id",topEmployeeId)
+.maybeSingle();
+
+if(error)throw error;
+employee=data;
+}
+
+if(!employee){
+nameElement.innerText="לא ניתן לזהות עובד";
+return;
+}
+
+nameElement.innerText=employee.full_name;
+revenueElement.innerText=money(total);
+
+}catch(error){
+console.error("Weekly top employee error:",error);
+nameElement.innerText="לא ניתן לטעון";
+revenueElement.innerText="";
+}
+}
+
+async function loadWeeklyGoals(){
+if(!currentEmployee)return;
+
+const week=getCurrentWeek();
+$("weeklyPeriod").innerText="השבוע: "+week.start+" עד "+week.end;
+$("weeklyGoalMessage").innerText="";
+$("goalSaveMessage").innerText="";
+
+const {data:target,error:targetError}=await supabaseClient
+.from("weekly_targets")
+.select("id,week_start,week_end,target_upgrades,target_revenue")
+.eq("week_start",week.start)
+.maybeSingle();
+
+if(targetError){
+console.error(targetError);
+$("weeklyGoalMessage").innerText="שגיאה בטעינת היעד השבועי";
+return;
+}
+
+const {data:stats,error:statsError}=await supabaseClient.rpc("get_team_sales_stats",{
+p_start_date:week.start,
+p_end_date:week.end
+});
+
+if(statsError){
+console.error(statsError);
+$("weeklyGoalMessage").innerText="שגיאה בטעינת התקדמות הצוות";
+return;
+}
+
+const actualCount=Number(stats?.[0]?.upgrade_count||0);
+const actualRevenue=Number(stats?.[0]?.total_revenue||0);
+const targetCount=Number(target?.target_upgrades||0);
+const targetRevenue=Number(target?.target_revenue||0);
+
+$("weeklyTargetCount").innerText=targetCount;
+$("weeklyTargetRevenue").innerText=money(targetRevenue);
+$("weeklyActualUpgrades").innerText=actualCount;
+$("weeklyActualRevenue").innerText=money(actualRevenue);
+
+const countPercent=targetCount>0?Math.min(100,actualCount/targetCount*100):0;
+const revenuePercent=targetRevenue>0?Math.min(100,actualRevenue/targetRevenue*100):0;
+
+$("weeklyUpgradeText").innerText=actualCount+" / "+targetCount;
+$("weeklyUpgradeBar").style.width=countPercent+"%";
+$("weeklyUpgradePercent").innerText=Math.round(countPercent)+"%";
+$("weeklyUpgradeRemaining").innerText=targetCount>0?
+"נותרו "+Math.max(0,targetCount-actualCount)+" שדרוגים":"לא הוגדר יעד";
+
+$("weeklyRevenueText").innerText=money(actualRevenue)+" / "+money(targetRevenue);
+$("weeklyRevenueBar").style.width=revenuePercent+"%";
+$("weeklyRevenuePercent").innerText=Math.round(revenuePercent)+"%";
+$("weeklyRevenueRemaining").innerText=targetRevenue>0?
+"נותרו "+money(Math.max(0,targetRevenue-actualRevenue)):"לא הוגדר יעד";
+
+if(currentEmployee.role==="admin"){
+$("goalUpgrades").value=target?target.target_upgrades:"";
+$("goalRevenue").value=target?target.target_revenue:"";
+}
+
+if(!target){
+$("weeklyGoalMessage").innerText="המנהל עדיין לא הגדיר יעד לשבוע זה.";
+}
+
+await loadWeeklyTopEmployee(week);
+}
+
+async function saveWeeklyGoal(){
+if(!currentEmployee||currentEmployee.role!=="admin"){
+alert("אין לך הרשאה להגדיר יעד");
+return;
+}
+
+const upgrades=Number($("goalUpgrades").value);
+const revenue=Number($("goalRevenue").value);
+
+if(!Number.isInteger(upgrades)||upgrades<0||!Number.isFinite(revenue)||revenue<0){
+$("goalSaveMessage").innerText="נא להזין יעדים תקינים";
+$("goalSaveMessage").className="message error";
+return;
+}
+
+const week=getCurrentWeek();
+const button=$("saveWeeklyGoal");
+button.disabled=true;
+button.innerText="שומר...";
+
+try{
+const {error}=await supabaseClient
+.from("weekly_targets")
+.upsert({
+week_start:week.start,
+week_end:week.end,
+target_upgrades:upgrades,
+target_revenue:revenue,
+created_by:currentAuthUser.id
+},{onConflict:"week_start"});
+
+if(error)throw error;
+
+$("goalSaveMessage").innerText="היעד השבועי נשמר בהצלחה";
+$("goalSaveMessage").className="message success";
+await loadWeeklyGoals();
+
+}catch(error){
+console.error(error);
+$("goalSaveMessage").innerText="שגיאה בשמירת היעד: "+error.message;
+$("goalSaveMessage").className="message error";
+}finally{
+button.disabled=false;
+button.innerText="שמירת יעד שבועי";
+}
+}
+
+/* WhatsApp Offer Functions */
+
+function normalizeIsraeliPhone(phone){
+let number=String(phone||"").replace(/[\s\-().]/g,"");
+
+if(number.startsWith("+")){
+number=number.substring(1);
+}
+
+if(number.startsWith("972")){
+number=number;
+}else if(number.startsWith("0")){
+number="972"+number.substring(1);
+}else{
+return null;
+}
+
+if(!/^972\d{8,9}$/.test(number)){
+return null;
+}
+
+return number;
+}
+
+function getOfferMessage(){
+const name=$("offerGuestName").value.trim();
+const nights=$("offerNights").value.trim();
+const room=$("offerRoomType").value.trim();
+const link=$("offerRoomLink").value.trim();
+
+return `שלום ${name} 😊
+
+שמחים להציע לך שדרוג לחדר מסוג ${room} למשך ${nights} לילות.
+
+לצפייה בהצעה ובפרטים נוספים:
+${link}
+
+נשמח לארח אותך!
+
+צוות מלון גורדוניה`;
+}
+
+function validateOffer(){
+const name=$("offerGuestName").value.trim();
+const phone=$("offerPhone").value.trim();
+const nights=$("offerNights").value.trim();
+const room=$("offerRoomType").value.trim();
+const link=$("offerRoomLink").value.trim();
+
+let valid=true;
+let errorMessage="";
+
+if(!name||!phone||!nights||!room||!link){
+valid=false;
+errorMessage="נא למלא את כל השדות";
+}else if(!normalizeIsraeliPhone(phone)){
+valid=false;
+errorMessage="מספר הטלפון אינו תקין. יש להזין מספר ישראלי תקין";
+}else if(!Number.isInteger(Number(nights))||Number(nights)<1){
+valid=false;
+errorMessage="נא להזין מספר לילות תקין";
+}else{
+try{
+const url=new URL(link);
+if(url.protocol!=="https:"&&url.protocol!=="http:"){
+valid=false;
+errorMessage="יש להזין קישור שמתחיל ב-https:// או http://";
+}
+}catch(error){
+valid=false;
+errorMessage="קישור ההצעה אינו תקין";
+}
+}
+
+$("sendWhatsAppButton").disabled=!valid;
+
+if(!valid&&Object.values({
+name,phone,nights,room,link
+}).some(value=>value)){
+$("offerStatus").innerText=errorMessage;
+$("offerStatus").className="offer-status error";
+}else{
+$("offerStatus").innerText="";
+$("offerStatus").className="offer-status";
+}
+
+return valid;
+}
+
+function updateOfferPreview(){
+const name=$("offerGuestName").value.trim()||"[שם האורח]";
+const nights=$("offerNights").value.trim()||"[מספר הלילות]";
+const room=$("offerRoomType").value.trim()||"[סוג החדר]";
+const link=$("offerRoomLink").value.trim()||"[קישור להצעה]";
+
+const message=`שלום ${name} 😊
+
+שמחים להציע לך שדרוג לחדר מסוג ${room} למשך ${nights} לילות.
+
+לצפייה בהצעה ובפרטים נוספים:
+${link}
+
+נשמח לארח אותך!
+
+צוות מלון גורדוניה`;
+
+$("offerMessagePreview").innerText=message;
+validateOffer();
+}
+
+function sendWhatsAppOffer(){
+if(!validateOffer()){
+return;
+}
+
+const phone=normalizeIsraeliPhone($("offerPhone").value);
+const message=getOfferMessage();
+const whatsappUrl="https://wa.me/"+phone+"?text="+encodeURIComponent(message);
+
+const newWindow=window.open(whatsappUrl,"_blank");
+
+if(!newWindow){
+window.location.href=whatsappUrl;
+}
+
+$("offerStatus").innerText="ההצעה נפתחה ב-WhatsApp. יש ללחוץ על שליחה כדי לשלוח לאורח.";
+$("offerStatus").className="offer-status success";
+}
+
+function resetOffer(){
+$("offerGuestName").value="";
+$("offerPhone").value="";
+$("offerNights").value="";
+$("offerRoomType").value="";
+$("offerRoomLink").value="";
+$("offerStatus").innerText="";
+$("offerStatus").className="offer-status";
+updateOfferPreview();
+}
+
+function activateTab(tabId){
 document.querySelectorAll(".tab-btn").forEach(b=>{
 b.classList.toggle("active",b.dataset.tab===tabId);
 });
-
 document.querySelectorAll(".panel").forEach(p=>{
 p.classList.toggle("active",p.id===tabId);
 });
 
-if(tabId==="dashboardPanel"){
-loadDashboard();
-}
+if(tabId==="dashboardPanel")loadDashboard();
+if(tabId==="weeklyGoalsPanel")loadWeeklyGoals();
 }
 
 $("loginForm").addEventListener("submit",login);
 $("logoutButton").addEventListener("click",logout);
 $("saveTransactionButton").addEventListener("click",saveTransaction);
+$("saveWeeklyGoal").addEventListener("click",saveWeeklyGoal);
+$("refreshWeeklyGoals").addEventListener("click",loadWeeklyGoals);
 
 $("currentRoomNum").addEventListener("change",calculatePrice);
 $("targetRoomNum").addEventListener("change",calculatePrice);
@@ -1002,24 +1444,39 @@ activateTab(button.dataset.tab);
 });
 
 $("refreshDashboard").addEventListener("click",loadDashboard);
-$("dateFrom").addEventListener("change",renderDashboard);
-$("dateTo").addEventListener("change",renderDashboard);
+$("dateFrom").addEventListener("change",loadDashboard);
+$("dateTo").addEventListener("change",loadDashboard);
 $("employeeFilter").addEventListener("change",renderDashboard);
 
+/* WhatsApp Event Listeners */
+
+[
+"offerGuestName",
+"offerPhone",
+"offerNights",
+"offerRoomType",
+"offerRoomLink"
+].forEach(id=>{
+$(id).addEventListener("input",updateOfferPreview);
+});
+
+$("sendWhatsAppButton").addEventListener("click",sendWhatsAppOffer);
+$("resetOfferButton").addEventListener("click",resetOffer);
+
 async function checkSession(){
-
 const {data,error}=await supabaseClient.auth.getSession();
-
-if(error)return;
-
+if(error){
+console.error("SESSION ERROR:",error);
+return;
+}
 if(data.session){
 await loadEmployee(data.session.user);
 }
 }
 
 initializeRoomOptions();
+updateOfferPreview();
 checkSession();
 </script>
-
 </body>
 </html>
